@@ -66,23 +66,21 @@ resource "aws_security_group" "export" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "sg" {
-  count             = var.target_group != null ? 0 : 1
-  security_group_id = aws_security_group.main.id
-  from_port         = var.container_port
-  to_port           = var.container_port
-  ip_protocol       = "tcp"
-  cidr_ipv4         = "0.0.0.0/0"
-  #referenced_security_group_id = aws_security_group.export[0].id
+  count                        = var.target_group != null ? 0 : 1
+  security_group_id            = aws_security_group.main.id
+  from_port                    = var.container_port
+  to_port                      = var.container_port
+  ip_protocol                  = "tcp"
+  referenced_security_group_id = aws_security_group.export[0].id
 }
 
 resource "aws_vpc_security_group_egress_rule" "export" {
-  count             = var.target_group != null ? 0 : 1
-  security_group_id = aws_security_group.export[0].id
-  from_port         = var.container_port
-  to_port           = var.container_port
-  ip_protocol       = "tcp"
-  #referenced_security_group_id = aws_security_group.main.id
-  cidr_ipv4 = "0.0.0.0/0"
+  count                        = var.target_group != null ? 0 : 1
+  security_group_id            = aws_security_group.export[0].id
+  from_port                    = var.container_port
+  to_port                      = var.container_port
+  ip_protocol                  = "tcp"
+  referenced_security_group_id = aws_security_group.main.id
 }
 
 ################################
